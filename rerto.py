@@ -1,5 +1,4 @@
 import sys
-
 	#listas de diccionario 	
 clients=[
      {
@@ -19,16 +18,12 @@ clients=[
      }
 
 ]
-
-
-
 def create_client(client):
     global clients
     if client not in clients:  
         clients.append(client)
     else:
         print('Client already is in the client\' list')
-    
 
 def list_clients():
     for idx, client in enumerate(clients):
@@ -39,31 +34,41 @@ def list_clients():
          email=client['email'],
          position=client['position'],   ))
 
-
-
-def update_client(client_name,update_client_name):
+def update_client(client_name):
     global clients
-    if client_name in clients:
-       index=clients.index(client_name)
-       clients[index]=update_name 
-    else :
-       print("Client in not in clients list")
-
+    for idx, client in enumerate(clients):
+        if client['name']==client_name:
+           print('El usuario si existe')
+           nuevo={
+	         'name':input('Teclea el nuevo nombre'),
+                 'company':input('Teclea la nueva compania'),
+                 'email':input('Teclea el nuevo valor de email'),
+                 'position':input('Teclea la nueva posioscion'),}
+           client.update(nuevo) 
+           continue
+        else:
+           continue
+           print('El usuario no existe')
+           
 
 def delet_client(client_name):
-    global clients
-    if client_name  in clients:
-       clients.remove(client_name)
-    else:
-       print('Client is not in client list')
+     borrar=-1
+     for idx, client in enumerate(clients):
+        if client['name']==client_name:
+           borrar=idx
+     clients.pop(borrar)
 
 
 def search_client(client_name):
-    for client in clients:
-       if client != client_name:
-          continue
-       else:
-          return True
+    impresion=0
+    for idx, client in enumerate(clients):
+        if client['name']==client_name:
+           print('el usuario si exite',client,'\n')
+           break
+        else :
+           impresion=1;
+    if impresion==1:
+        print("El usuario no existe")
 def _get_client_field(field_name):
     field=None
     while not field:
@@ -115,17 +120,10 @@ if __name__=='__main__':
    
     elif command=='U':
        client_name=_get_client_name()
-       updated_client_name= input('What i s updated client name ')
-       update_client(client_name,updated_client_name)
+       update_client(client_name)
        list_clients()
     elif command=='S':
-       client_name=_get_client_name()
-       found=search_client(client_name)
-       if found:
-          print("The client in in the clients list")
-
-       else :
-          print('The client: {} is not on our clients list ', format(client_name))
+       search_client(input("Teclea el valor del nombre a buscar  "))
     elif command=='L':
         list_clients()
     else:
